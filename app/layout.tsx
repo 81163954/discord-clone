@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider localization={{ locale: "zh-Hans-CN" }}>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
           <ThemeProvider
             attribute="class"
