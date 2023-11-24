@@ -49,17 +49,16 @@ const InitialModal = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      imageUrl: "",
+      imageUrl:
+        "https://www.google.com.hk/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png",
     },
   });
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("onSubmit");
-
     try {
-      await axios.post("api/server", values);
+      await axios.post("/api/servers", values);
 
       form.reset();
       router.refresh();
