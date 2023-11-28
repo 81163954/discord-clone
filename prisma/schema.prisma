@@ -60,7 +60,7 @@ model Member {
   server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   createAt DateTime @default(now())
-  updateAr DateTime @updatedAt
+  updateAt DateTime @updatedAt
 
   @@index([profileId])
   @@index([serverId])
