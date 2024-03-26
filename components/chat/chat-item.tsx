@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
 import { Member, Profile } from "@prisma/client";
-import { ShieldAlert, ShieldCheck } from "lucide-react";
+import { FileIcon, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { ActionTooltip } from "../action-tooltip";
 import { UserAvatar } from "../user-avatar";
 import { useRouter, useParams } from "next/navigation";
+import Image from "next/image";
 
 interface ChatItemProps {
   id: string;
@@ -51,6 +52,11 @@ export const ChatItem = ({
     router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
   };
 
+  const fileType = fileUrl?.split(".").pop();
+
+  const isPDF = fileType === "pdf" && fileUrl;
+  const isImage = !isPDF && fileUrl;
+
   return (
     <div className="group relative flex w-full items-center p-4 transition hover:bg-black/5">
       <div className="group relative flex w-full items-center p-4 transition hover:bg-black/5">
@@ -78,6 +84,34 @@ export const ChatItem = ({
                 {timestamp}
               </span>
             </div>
+            {isImage && (
+              <a
+                href={fileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative mt-2 flex aspect-square h-48 w-48 items-center overflow-hidden rounded-md border bg-secondary"
+              >
+                <Image
+                  src={fileUrl}
+                  alt={content}
+                  fill
+                  className="object-cover"
+                />
+              </a>
+            )}
+            {isPDF && (
+              <div className="relative mt-2 flex items-center rounded-md bg-background/10 p-2">
+                <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />
+                <a
+                  href={fileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-2 text-sm text-indigo-500 hover:underline dark:text-indigo-400"
+                >
+                  PDF File
+                </a>
+              </div>
+            )}
             {!fileUrl && !isEditing && (
               <p
                 className={cn(
