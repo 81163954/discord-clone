@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useOrigin } from "@/hooks/use-origin";
 import { Check, Copy, RefreshCw } from "lucide-react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const InviteModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
@@ -25,6 +26,7 @@ const InviteModal = () => {
 
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
 
@@ -45,6 +47,8 @@ const InviteModal = () => {
       );
 
       onOpen("invite", { server: response.data });
+
+      router.refresh();
     } catch (error) {
       console.log(error);
     } finally {

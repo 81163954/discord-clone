@@ -57,7 +57,7 @@ const EditServerModal = () => {
       form.setValue("name", server.name);
       form.setValue("imageUrl", server.imageUrl);
     }
-  }, [server, form]);
+  }, [server, form, isOpen]);
 
   const isLoading = form.formState.isSubmitting;
 
@@ -74,6 +74,7 @@ const EditServerModal = () => {
   };
 
   const handleClose = () => {
+    form.reset();
     onClose();
   };
 
